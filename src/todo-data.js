@@ -11,8 +11,8 @@ class Task {
 
 class TaskList {
 
-    constructor() {
-        this.title = 'Untitled';
+    constructor(title) {
+        this.title = title;
         this.tasks = new Array();
     }
     
@@ -31,8 +31,8 @@ class TodoData {
         this.taskLists = new Array();
     }
 
-    addTaskList() {
-        this.taskLists.push(new TaskList());
+    addTaskList(title) {
+        this.taskLists.push(new TaskList(title));
     }
 
     removeTaskList(taskList) {
