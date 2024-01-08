@@ -35,7 +35,7 @@ class TodoData {
         this.taskLists.push(new TaskList(title));
     }
 
-    removeTaskList(taskList) {
+    deleteTaskList(taskList) {
         this.taskLists.splice(this.taskLists.indexOf(taskList), 1);
     }
 }

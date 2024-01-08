@@ -61,24 +61,35 @@ class SideBar {
         const index = this.todoData.taskLists.indexOf(taskList);
         this.taskListsElement.children.item(index).textContent = taskList.title;
     }
+
+    onTaskListDelete(taskList) {
+        const index = this.todoData.taskLists.indexOf(taskList);
+        this.taskListsElement.children.item(index).remove();
+        this.todoData.deleteTaskList(taskList);
+        console.log(taskList);
+    }
 }
 
 class TaskListElement {
 
-    constructor(notifyNameChange) {
+    constructor(notifyNameChange, notifyDelete) {
         this.header = new Editable('', 'task-list-name',
             (value) => {this.onNameChange(value)});
+        const deleteButton = makeText('button', 'Delete Task list');
+        deleteButton.addEventListener('click', ()=> this.onDelete());
         this.tasks = make('ol');
         const newTaskButton = new NewThingButton('Task title...', 'new-task',
             (thing) => this.onNewTask(thing));
         this.newTaskInput = make('input', {placeholder: 'New task...'});
         this.root = make('div', {class: 'task-list'}, [
             this.header.root,
+            deleteButton,
             this.tasks,
             newTaskButton.root
         ]);
         this.selectedTaskList = null;
         this.notifyNameChange = notifyNameChange;
+        this.notifyDelete = notifyDelete;
     }
 
     addTask(task) {
@@ -86,6 +97,7 @@ class TaskListElement {
     }
 
     onSelectTaskList(taskList) {
+        this.root.hidden = false;
         this.selectedTaskList = taskList;
         this.header.root.value = taskList.title;
         this.tasks.replaceChildren();
@@ -103,11 +115,13 @@ class TaskListElement {
     }
 
     onNameChange(name) {
-        if (this.selectedTaskList === null) {
-            return;
-        }
         this.selectedTaskList.title = name;
         this.notifyNameChange(this.selectedTaskList);
+    }
+
+    onDelete() {
+        this.root.hidden = true;
+        this.notifyDelete(this.selectedTaskList);
     }
 }
 

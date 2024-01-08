@@ -15,7 +15,8 @@ todoData.taskLists[2].addTask('wow');
 
 console.log(todoData);
 
-const taskListElement = new TaskListElement((taskList) => {sideBar.onTaskListNameChange(taskList)});
+const taskListElement = new TaskListElement((taskList) => {sideBar.onTaskListNameChange(taskList)},
+    (taskList) => sideBar.onTaskListDelete(taskList));
 const sideBar = new SideBar(todoData, (taskList) => taskListElement.onSelectTaskList(taskList));
 
 document.body.appendChild(sideBar.root);
