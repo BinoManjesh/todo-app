@@ -1,8 +1,8 @@
 class Task {
 
-    constructor() {
-        this.title = 'Title';
-        this.description = 'Description';
+    constructor(title) {
+        this.title = title;
+        this.description = '';
         this.isDone = false;
         this.dueDate = '';
         this.priority = 4;
@@ -16,8 +16,8 @@ class TaskList {
         this.tasks = new Array();
     }
     
-    addTask() {
-        this.tasks.push(new Task());
+    addTask(title) {
+        this.tasks.push(new Task(title));
     }
 
     removeTask(task) {

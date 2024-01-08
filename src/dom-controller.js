@@ -2,7 +2,7 @@ import { make, makeText } from "./tree-maker";
 
 class SideBar {
 
-    constructor(todoData) {
+    constructor(todoData, taskListDisplay) {
         this.todoData = todoData;
         this.taskListsElement = make('div', {class: 'task-lists'});
         const newListButton = makeText('button', '+');
@@ -19,6 +19,7 @@ class SideBar {
         for (let taskList of todoData.taskLists) {
             this.addTaskList(taskList.title)
         }
+        taskListDisplay.onSelectTaskList(todoData.taskLists[0]);
     }
 
     onNewTaskList(title) {
@@ -35,4 +36,29 @@ class SideBar {
     }
 }
 
-export {SideBar}
+class TaskListElement {
+
+    constructor() {
+        this.tasks = make('ol');
+        const newTaskButton = makeText('button', '+');
+        this.newTaskInput = make('input', {placeholder: 'New task...'});
+        this.root = make('div', {class: 'task-list'}, [
+            this.tasks,
+            make('div', {class: 'new-task'}, [
+                this.newTaskInput,
+                newTaskButton
+            ])
+        ]);
+        this.selectedTaskList = null;
+    }
+
+    onSelectTaskList(taskList) {
+        this.selectedTaskList = taskList;
+        this.tasks.replaceChildren();
+        for (let task of taskList.tasks) {
+            this.tasks.appendChild(makeText('p', task.title));
+        }
+    }
+}
+
+export {SideBar, TaskListElement}
