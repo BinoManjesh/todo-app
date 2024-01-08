@@ -51,24 +51,37 @@ class TaskListElement {
 
     constructor() {
         this.tasks = make('ol');
-        const newTaskButton = makeText('button', '+');
+        const newTaskButton = new NewThingButton('Task title...', 'new-task',
+            (thing) => this.onNewTask(thing));
         this.newTaskInput = make('input', {placeholder: 'New task...'});
         this.root = make('div', {class: 'task-list'}, [
             this.tasks,
-            make('div', {class: 'new-task'}, [
-                this.newTaskInput,
-                newTaskButton
-            ])
+            newTaskButton.root
         ]);
         this.selectedTaskList = null;
+    }
+
+    addTask(task) {
+        console.log(task);
+        this.tasks.appendChild(makeText('p', task.title));
     }
 
     onSelectTaskList(taskList) {
         this.selectedTaskList = taskList;
         this.tasks.replaceChildren();
         for (let task of taskList.tasks) {
-            this.tasks.appendChild(makeText('p', task.title));
+            this.addTask(task);
         }
+    }
+    
+    onNewTask(title) {
+        console.log(title);
+        if (this.selectedTaskList === null) {
+            return;
+        }
+        console.log('gruh');
+        this.selectedTaskList.addTask(title);
+        this.addTask(this.selectedTaskList.tasks.at(-1));
     }
 }
 
