@@ -19,6 +19,14 @@ class NewThingButton {
     }
 }
 
+class Editable {
+    
+    constructor(value, className, onChange) {
+        this.root = make('input', {value: value, class: className});
+        this.root.addEventListener('change', () => onChange(this.root.value));
+    }
+}
+
 class SideBar {
 
     constructor(todoData, taskListDisplay) {
@@ -53,11 +61,14 @@ class SideBar {
 class TaskListElement {
 
     constructor() {
+        this.header = new Editable('', 'task-list-name',
+            (value) => {this.onNameChange(value)});
         this.tasks = make('ol');
         const newTaskButton = new NewThingButton('Task title...', 'new-task',
             (thing) => this.onNewTask(thing));
         this.newTaskInput = make('input', {placeholder: 'New task...'});
         this.root = make('div', {class: 'task-list'}, [
+            this.header.root,
             this.tasks,
             newTaskButton.root
         ]);
@@ -70,6 +81,7 @@ class TaskListElement {
 
     onSelectTaskList(taskList) {
         this.selectedTaskList = taskList;
+        this.header.root.value = taskList.title;
         this.tasks.replaceChildren();
         for (let task of taskList.tasks) {
             this.addTask(task);
@@ -82,6 +94,13 @@ class TaskListElement {
         }
         this.selectedTaskList.addTask(title);
         this.addTask(this.selectedTaskList.tasks.at(-1));
+    }
+
+    onNameChange(name) {
+        if (this.selectedTaskList === null) {
+            return;
+        }
+        this.selectedTaskList.title = name;
     }
 }
 
