@@ -29,8 +29,7 @@ class Editable {
 
 class SideBar {
 
-    constructor(todoData, taskListDisplay) {
-        this.taskListDisplay = taskListDisplay;
+    constructor(todoData, notifySelectTaskList) {
         this.todoData = todoData;
         this.taskListsElement = make('div', {class: 'task-lists'});
         const newTaskListButton = new NewThingButton('New task list...',
@@ -42,7 +41,8 @@ class SideBar {
         for (let taskList of todoData.taskLists) {
             this.addTaskList(taskList)
         }
-        taskListDisplay.onSelectTaskList(todoData.taskLists[0]);
+        this.notifySelectTaskList = notifySelectTaskList;
+        this.notifySelectTaskList(todoData.taskLists[0]);
     }
 
     onNewTaskList(title) {
@@ -53,7 +53,7 @@ class SideBar {
     addTaskList(taskList) {
         const element = makeText('p', taskList.title);
         element.addEventListener('click',
-            () => this.taskListDisplay.onSelectTaskList(taskList));
+            () => this.notifySelectTaskList(taskList));
         this.taskListsElement.appendChild(element);
     }
 }
