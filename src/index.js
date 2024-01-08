@@ -7,7 +7,11 @@ todoData.taskLists[0].addTask('bruh moment');
 todoData.taskLists[0].addTask('bruh moment2');
 todoData.taskLists[0].addTask('bruh moment3');
 todoData.addTaskList('work');
+todoData.taskLists[1].addTask('work moment');
+todoData.taskLists[1].addTask('work moment2');
+todoData.taskLists[1].addTask('work moment3');
 todoData.addTaskList('personal');
+todoData.taskLists[2].addTask('wow');
 
 console.log(todoData);
 

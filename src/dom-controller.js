@@ -22,28 +22,31 @@ class NewThingButton {
 class SideBar {
 
     constructor(todoData, taskListDisplay) {
+        this.taskListDisplay = taskListDisplay;
         this.todoData = todoData;
         this.taskListsElement = make('div', {class: 'task-lists'});
         const newTaskListButton = new NewThingButton('New task list...',
             'new-task-list', (thing) => this.onNewTaskList(thing));
-        console.log(newTaskListButton.root);
         this.root = make('div', {class: 'side-bar'}, [
             this.taskListsElement,
             newTaskListButton.root
         ]);
         for (let taskList of todoData.taskLists) {
-            this.addTaskList(taskList.title)
+            this.addTaskList(taskList)
         }
         taskListDisplay.onSelectTaskList(todoData.taskLists[0]);
     }
 
     onNewTaskList(title) {
         this.todoData.addTaskList(title);
-        this.addTaskList(title);
+        this.addTaskList(this.todoData.taskLists.at(-1));
     }
 
-    addTaskList(title) {
-        this.taskListsElement.appendChild(makeText('p', title));
+    addTaskList(taskList) {
+        const element = makeText('p', taskList.title);
+        element.addEventListener('click',
+            () => this.taskListDisplay.onSelectTaskList(taskList));
+        this.taskListsElement.appendChild(element);
     }
 }
 
@@ -62,7 +65,6 @@ class TaskListElement {
     }
 
     addTask(task) {
-        console.log(task);
         this.tasks.appendChild(makeText('p', task.title));
     }
 
@@ -75,11 +77,9 @@ class TaskListElement {
     }
     
     onNewTask(title) {
-        console.log(title);
         if (this.selectedTaskList === null) {
             return;
         }
-        console.log('gruh');
         this.selectedTaskList.addTask(title);
         this.addTask(this.selectedTaskList.tasks.at(-1));
     }
