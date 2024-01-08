@@ -1,20 +1,35 @@
 import { make, makeText } from "./tree-maker";
 
+class NewThingButton {
+    
+    constructor(placeholder, className, onNewThing) {
+        this.input = make('input', {placeholder: placeholder});
+        const button = makeText('button', '+');
+        this.root = make('div', {class: className}, [
+            this.input,
+            button
+        ]);
+        button.addEventListener('click', () => {
+            const thing = this.input.value;
+            if (thing != '') {
+                onNewThing(thing);
+                this.input.value = '';
+            }
+        })
+    }
+}
+
 class SideBar {
 
     constructor(todoData, taskListDisplay) {
         this.todoData = todoData;
         this.taskListsElement = make('div', {class: 'task-lists'});
-        const newListButton = makeText('button', '+');
-        this.newListTitle = make('input', {placeholder: 'New task list...'});
-        newListButton.addEventListener('click',
-            () => this.onNewTaskList(this.newListTitle.value));
+        const newTaskListButton = new NewThingButton('New task list...',
+            'new-task-list', (thing) => this.onNewTaskList(thing));
+        console.log(newTaskListButton.root);
         this.root = make('div', {class: 'side-bar'}, [
             this.taskListsElement,
-            make('div', {class: 'new-task-list'}, [
-                this.newListTitle,
-                newListButton
-            ])
+            newTaskListButton.root
         ]);
         for (let taskList of todoData.taskLists) {
             this.addTaskList(taskList.title)
@@ -23,12 +38,8 @@ class SideBar {
     }
 
     onNewTaskList(title) {
-        if (!title) {
-            return;
-        }
         this.todoData.addTaskList(title);
         this.addTaskList(title);
-        this.newListTitle.value = '';
     }
 
     addTaskList(title) {
