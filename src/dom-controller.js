@@ -56,11 +56,16 @@ class SideBar {
             () => this.notifySelectTaskList(taskList));
         this.taskListsElement.appendChild(element);
     }
+
+    onTaskListNameChange(taskList) {
+        const index = this.todoData.taskLists.indexOf(taskList);
+        this.taskListsElement.children.item(index).textContent = taskList.title;
+    }
 }
 
 class TaskListElement {
 
-    constructor() {
+    constructor(notifyNameChange) {
         this.header = new Editable('', 'task-list-name',
             (value) => {this.onNameChange(value)});
         this.tasks = make('ol');
@@ -73,6 +78,7 @@ class TaskListElement {
             newTaskButton.root
         ]);
         this.selectedTaskList = null;
+        this.notifyNameChange = notifyNameChange;
     }
 
     addTask(task) {
@@ -101,6 +107,7 @@ class TaskListElement {
             return;
         }
         this.selectedTaskList.title = name;
+        this.notifyNameChange(this.selectedTaskList);
     }
 }
 
