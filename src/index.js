@@ -28,7 +28,8 @@ const sideBar = new SideBar(todoData,
     (taskList) => taskListElement.onSelectTaskList(taskList));
 const detailedTaskElement = new DetailedTaskElement(
     (task) => taskListElement.onDateChange(task),
-    (task) => taskListElement.onPriorityChange(task));
+    (task) => taskListElement.onPriorityChange(task),
+    (task) => taskListElement.onTaskDelete(task));
 detailedTaskElement.onTaskSelected(todoData.taskLists[0].tasks[1]);
 
 document.body.appendChild(sideBar.root);

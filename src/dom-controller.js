@@ -143,6 +143,14 @@ class TaskListElement {
         const taskElement = this.getTaskElement(task);
         taskElement.onPriorityChange();
     }
+    
+    onTaskDelete(task) {
+        const index = this.selectedTaskList.tasks.indexOf(task)
+        const taskElement = this.tasks[index];
+        taskElement.onDelete();
+        this.tasks.splice(index, 1);
+        this.selectedTaskList.removeTask(task);
+    }
 }
 
 class TaskElement { 
@@ -181,14 +189,20 @@ class TaskElement {
     onPriorityChange() {
         this.root.className = 'P' + this.task.priority;
     }
+
+    onDelete() {
+        this.root.remove();
+    }
 }
 
 class DetailedTaskElement {
 
     static priorityNames = ['None', 'Low', 'Medium', 'High'];
 
-    constructor(notifyDateChange, notifyPriorityChange) {
+    constructor(notifyDateChange, notifyPriorityChange, notifyDelete) {
         this.title = make('p');
+        const deleteButton = makeText('button', 'Delete Task');
+        deleteButton.addEventListener('click', () => this.onDelete());
         this.date = make('input', {type: 'date'});
         this.date.addEventListener('change',
             () => this.onDateChange(this.date.value));
@@ -205,6 +219,7 @@ class DetailedTaskElement {
             () => this.onDescriptionChange(this.description.value));
         this.root = make('div', {class: 'detailed-task'}, [
             this.title,
+            deleteButton,
             this.date,
             this.priority,
             this.description
@@ -212,6 +227,7 @@ class DetailedTaskElement {
         this.selectedTask = null;
         this.notifyDateChange = notifyDateChange;
         this.notifyPriorityChange = notifyPriorityChange;
+        this.notifyDelete = notifyDelete;
     }
 
     onTaskSelected(task) {
@@ -220,6 +236,7 @@ class DetailedTaskElement {
         this.date.value = task.dueDate;
         this.priority.value = task.priority;
         this.description.value = task.description;
+        this.root.hidden = false;
     }
 
     onDateChange(date) {
@@ -234,6 +251,11 @@ class DetailedTaskElement {
 
     onDescriptionChange(description) {
         this.selectedTask.description = description;
+    }
+
+    onDelete() {
+        this.notifyDelete(this.selectedTask);
+        this.root.hidden = true;
     }
 }
 
