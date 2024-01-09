@@ -1,3 +1,4 @@
+import dateFormatter from "./date-formatter";
 import { make, makeText } from "./tree-maker";
 
 class NewThingButton {
@@ -66,7 +67,6 @@ class SideBar {
         const index = this.todoData.taskLists.indexOf(taskList);
         this.taskListsElement.children.item(index).remove();
         this.todoData.deleteTaskList(taskList);
-        console.log(taskList);
     }
 }
 
@@ -93,7 +93,8 @@ class TaskListElement {
     }
 
     addTask(task) {
-        this.tasks.appendChild(makeText('p', task.title));
+        const taskElement = new TaskElement(task);
+        this.tasks.appendChild(taskElement.root);
     }
 
     onSelectTaskList(taskList) {
@@ -122,6 +123,19 @@ class TaskListElement {
     onDelete() {
         this.root.hidden = true;
         this.notifyDelete(this.selectedTaskList);
+    }
+}
+
+class TaskElement { 
+    
+    constructor(task) {
+        const checkbox = make('input', {type: 'checkbox'});
+        checkbox.checked = task.isDone;
+        this.root = make('div', {class: 'task'}, [
+            checkbox,
+            make('input', {value: task.title}),
+            makeText('span', dateFormatter.format(task.dueDate))
+        ])
     }
 }
 
