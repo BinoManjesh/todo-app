@@ -1,4 +1,6 @@
-import { SideBar, TaskListElement, DetailedTaskElement } from "./dom-controller";
+import DetailedTaskElement from "./dom-controller/DetailedTaskElement";
+import SideBar from "./dom-controller/SideBar";
+import TaskListElement from "./dom-controller/TaskListElement";
 import { TodoData } from "./todo-data";
 
 const todoData = new TodoData();
