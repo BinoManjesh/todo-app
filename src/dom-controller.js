@@ -72,7 +72,7 @@ class SideBar {
 
 class TaskListElement {
 
-    constructor(notifyNameChange, notifyDelete) {
+    constructor(notifyNameChange, notifyDelete, notifyTaskSelect) {
         this.header = new Editable('', 'task-list-name',
             (value) => {this.onNameChange(value)});
         const deleteButton = makeText('button', 'Delete Task list');
@@ -90,10 +90,11 @@ class TaskListElement {
         this.selectedTaskList = null;
         this.notifyNameChange = notifyNameChange;
         this.notifyDelete = notifyDelete;
+        this.notifyTaskSelect = notifyTaskSelect;
     }
 
     addTask(task) {
-        const taskElement = new TaskElement(task);
+        const taskElement = new TaskElement(task, this.notifyTaskSelect);
         this.tasks.appendChild(taskElement.root);
     }
 
@@ -128,7 +129,7 @@ class TaskListElement {
 
 class TaskElement { 
     
-    constructor(task) {
+    constructor(task, notifySelected) {
         this.task = task;
         const checkbox = make('input', {type: 'checkbox'});
         checkbox.checked = task.isDone;
@@ -140,7 +141,8 @@ class TaskElement {
             checkbox,
             title,
             makeText('span', dateFormatter.format(task.dueDate))
-        ])
+        ]);
+        this.root.addEventListener('click', () => notifySelected(task));
     }
 
     onTitleChange(title) {
