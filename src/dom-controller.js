@@ -129,13 +129,26 @@ class TaskListElement {
 class TaskElement { 
     
     constructor(task) {
+        this.task = task;
         const checkbox = make('input', {type: 'checkbox'});
         checkbox.checked = task.isDone;
+        checkbox.addEventListener('change',
+            () => this.onCheckboxChange(checkbox.checked));
+        const title = make('input', {value: task.title});
+        title.addEventListener('change', () => this.onTitleChange(title.value));
         this.root = make('div', {class: 'task'}, [
             checkbox,
-            make('input', {value: task.title}),
+            title,
             makeText('span', dateFormatter.format(task.dueDate))
         ])
+    }
+
+    onTitleChange(title) {
+        this.task.title = title;
+    }
+
+    onCheckboxChange(checked) {
+        this.task.isDone = checked;
     }
 }
 
