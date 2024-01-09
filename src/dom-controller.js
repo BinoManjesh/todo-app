@@ -138,6 +138,11 @@ class TaskListElement {
         const taskElement = this.getTaskElement(task);
         taskElement.onDateChange();
     }
+
+    onPriorityChange(task) {
+        const taskElement = this.getTaskElement(task);
+        taskElement.onPriorityChange();
+    }
 }
 
 class TaskElement { 
@@ -152,12 +157,13 @@ class TaskElement {
         title.addEventListener('change', () => this.onTitleChange(title.value));
         this.date = makeText('span');
         this.onDateChange();
-        this.root = make('div', {class: 'task'}, [
+        this.root = make('div', {}, [
             checkbox,
             title,
             this.date
         ]);
         this.root.addEventListener('click', () => notifySelected(task));
+        this.onPriorityChange();
     }
 
     onTitleChange(title) {
@@ -171,22 +177,32 @@ class TaskElement {
     onDateChange() {
         this.date.textContent = dateFormatter.format(this.task.dueDate);
     }
+
+    onPriorityChange() {
+        this.root.className = 'P' + this.task.priority;
+    }
 }
 
 class DetailedTaskElement {
 
     static priorityNames = ['None', 'Low', 'Medium', 'High'];
 
-    constructor(notifyDateChange) {
+    constructor(notifyDateChange, notifyPriorityChange) {
         this.title = make('p');
         this.date = make('input', {type: 'date'});
-        this.date.addEventListener('change', () => this.onDateChange(this.date.value));
+        this.date.addEventListener('change',
+            () => this.onDateChange(this.date.value));
         this.priority = make('select');
+        this.priority.addEventListener('change',
+            () => this.onPriorityChange(this.priority.value));
         for (const i in DetailedTaskElement.priorityNames) {
             this.priority.appendChild(
-                makeText('option', DetailedTaskElement.priorityNames[i], {value: i}));
+                makeText('option', DetailedTaskElement.priorityNames[i],
+                {value: i}));
         }
         this.description = make('textarea');
+        this.description.addEventListener('change',
+            () => this.onDescriptionChange(this.description.value));
         this.root = make('div', {class: 'detailed-task'}, [
             this.title,
             this.date,
@@ -195,6 +211,7 @@ class DetailedTaskElement {
         ]);
         this.selectedTask = null;
         this.notifyDateChange = notifyDateChange;
+        this.notifyPriorityChange = notifyPriorityChange;
     }
 
     onTaskSelected(task) {
@@ -203,12 +220,20 @@ class DetailedTaskElement {
         this.date.value = task.dueDate;
         this.priority.value = task.priority;
         this.description.value = task.description;
-        console.log(task);
     }
 
     onDateChange(date) {
         this.selectedTask.dueDate = date;
         this.notifyDateChange(this.selectedTask);
+    }
+
+    onPriorityChange(priority) {
+        this.selectedTask.priority = priority;
+        this.notifyPriorityChange(this.selectedTask);
+    }
+
+    onDescriptionChange(description) {
+        this.selectedTask.description = description;
     }
 }
 

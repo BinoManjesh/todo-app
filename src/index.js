@@ -24,8 +24,11 @@ const taskListElement = new TaskListElement(
     (taskList) => {sideBar.onTaskListNameChange(taskList)},
     (taskList) => sideBar.onTaskListDelete(taskList),
     (task) => detailedTaskElement.onTaskSelected(task));
-const sideBar = new SideBar(todoData, (taskList) => taskListElement.onSelectTaskList(taskList));
-const detailedTaskElement = new DetailedTaskElement((task) => taskListElement.onDateChange(task));
+const sideBar = new SideBar(todoData,
+    (taskList) => taskListElement.onSelectTaskList(taskList));
+const detailedTaskElement = new DetailedTaskElement(
+    (task) => taskListElement.onDateChange(task),
+    (task) => taskListElement.onPriorityChange(task));
 detailedTaskElement.onTaskSelected(todoData.taskLists[0].tasks[1]);
 
 document.body.appendChild(sideBar.root);
