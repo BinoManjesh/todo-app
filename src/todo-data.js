@@ -5,7 +5,7 @@ class Task {
         this.description = '';
         this.isDone = false;
         this.dueDate = '';
-        this.priority = 4;
+        this.priority = 0;
     }
 }
 

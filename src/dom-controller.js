@@ -152,4 +152,34 @@ class TaskElement {
     }
 }
 
-export {SideBar, TaskListElement}
+class DetailedTaskElement {
+
+    static priorityNames = ['None', 'Low', 'Medium', 'High'];
+
+    constructor() {
+        this.title = make('p');
+        this.date = make('input', {type: 'date'});
+        this.priority = make('select');
+        for (const i in DetailedTaskElement.priorityNames) {
+            this.priority.appendChild(
+                makeText('option', DetailedTaskElement.priorityNames[i], {value: i}));
+        }
+        this.description = make('textarea');
+        this.root = make('div', {class: 'detailed-task'}, [
+            this.title,
+            this.date,
+            this.priority,
+            this.description
+        ]);
+    }
+
+    onTaskSelected(task) {
+        this.title.textContent = task.title;
+        this.date.value = task.dueDate;
+        this.priority.value = task.priority;
+        this.description.value = task.description;
+        console.log(task);
+    }
+}
+
+export {SideBar, TaskListElement, DetailedTaskElement};
