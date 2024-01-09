@@ -77,14 +77,15 @@ class TaskListElement {
             (value) => {this.onNameChange(value)});
         const deleteButton = makeText('button', 'Delete Task list');
         deleteButton.addEventListener('click', ()=> this.onDelete());
-        this.tasks = make('ol');
+        this.list = make('ol');
+        this.tasks = [];
         const newTaskButton = new NewThingButton('Task title...', 'new-task',
             (thing) => this.onNewTask(thing));
         this.newTaskInput = make('input', {placeholder: 'New task...'});
         this.root = make('div', {class: 'task-list'}, [
             this.header.root,
             deleteButton,
-            this.tasks,
+            this.list,
             newTaskButton.root
         ]);
         this.selectedTaskList = null;
@@ -95,14 +96,16 @@ class TaskListElement {
 
     addTask(task) {
         const taskElement = new TaskElement(task, this.notifyTaskSelect);
-        this.tasks.appendChild(taskElement.root);
+        this.tasks.push(taskElement);
+        this.list.appendChild(taskElement.root);
     }
 
     onSelectTaskList(taskList) {
         this.root.hidden = false;
         this.selectedTaskList = taskList;
         this.header.root.value = taskList.title;
-        this.tasks.replaceChildren();
+        this.list.replaceChildren();
+        this.tasks  = []
         for (let task of taskList.tasks) {
             this.addTask(task);
         }
@@ -125,6 +128,16 @@ class TaskListElement {
         this.root.hidden = true;
         this.notifyDelete(this.selectedTaskList);
     }
+
+    getTaskElement(task) {
+        const index = this.selectedTaskList.tasks.indexOf(task);
+        return this.tasks[index];
+    }
+
+    onDateChange(task) {
+        const taskElement = this.getTaskElement(task);
+        taskElement.onDateChange();
+    }
 }
 
 class TaskElement { 
@@ -137,10 +150,12 @@ class TaskElement {
             () => this.onCheckboxChange(checkbox.checked));
         const title = make('input', {value: task.title});
         title.addEventListener('change', () => this.onTitleChange(title.value));
+        this.date = makeText('span');
+        this.onDateChange();
         this.root = make('div', {class: 'task'}, [
             checkbox,
             title,
-            makeText('span', dateFormatter.format(task.dueDate))
+            this.date
         ]);
         this.root.addEventListener('click', () => notifySelected(task));
     }
@@ -152,15 +167,20 @@ class TaskElement {
     onCheckboxChange(checked) {
         this.task.isDone = checked;
     }
+
+    onDateChange() {
+        this.date.textContent = dateFormatter.format(this.task.dueDate);
+    }
 }
 
 class DetailedTaskElement {
 
     static priorityNames = ['None', 'Low', 'Medium', 'High'];
 
-    constructor() {
+    constructor(notifyDateChange) {
         this.title = make('p');
         this.date = make('input', {type: 'date'});
+        this.date.addEventListener('change', () => this.onDateChange(this.date.value));
         this.priority = make('select');
         for (const i in DetailedTaskElement.priorityNames) {
             this.priority.appendChild(
@@ -173,14 +193,22 @@ class DetailedTaskElement {
             this.priority,
             this.description
         ]);
+        this.selectedTask = null;
+        this.notifyDateChange = notifyDateChange;
     }
 
     onTaskSelected(task) {
+        this.selectedTask = task;
         this.title.textContent = task.title;
         this.date.value = task.dueDate;
         this.priority.value = task.priority;
         this.description.value = task.description;
         console.log(task);
+    }
+
+    onDateChange(date) {
+        this.selectedTask.dueDate = date;
+        this.notifyDateChange(this.selectedTask);
     }
 }
 
