@@ -2,6 +2,7 @@ import DetailedTaskElement from "./dom-controller/DetailedTaskElement";
 import SideBar from "./dom-controller/SideBar";
 import TaskListElement from "./dom-controller/TaskListElement";
 import { TodoData } from "./todo-data";
+import './styles.css'
 
 const todoData = new TodoData();
 todoData.addTaskList('inbox');

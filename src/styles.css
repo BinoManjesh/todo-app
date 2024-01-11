@@ -1,0 +1,35 @@
+textarea {
+    resize: none;
+}
+
+body {
+    display: flex;
+}
+
+div.side-bar {
+    flex-grow: 0;
+}
+
+div.task-list, div.detailed-task {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+div.task-list > :nth-child(n + 3), div.detailed-task > :nth-child(n + 3) {
+    grid-column-start: span 2;
+}
+
+div.task-list > button {
+    place-self: start end;
+}
+
+div.detailed-task > button {
+    color: red;
+    padding: 5px;
+    place-self: start end;
+}
+
+div.detailed-task > textarea {
+    height: 500px;
+}
