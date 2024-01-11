@@ -1,13 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+:root {
+    --bg1: #27374D;
+    --bg2: #526D82;
+    --txt1: #DDE6ED;
+    --txt2: #81a8c8;
+    height: 100%;
+}
+
+* {
+    background-color: var(--bg1);
+    color: var(--txt1);
+    font-family: Poppins, sans-serif;
+}
+
+input::placeholder {
+    color: var(--txt2);
+}
+
+input, button, textarea, select {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+input {
+    max-width: 100px;
+}
+
 textarea {
     resize: none;
 }
 
 body {
     display: flex;
+    margin: 0;
+    height: 100%;
 }
 
 div.side-bar {
     flex-grow: 0;
+    background-color: var(--bg2);
+    padding: 1em;
+}
+
+div.side-bar * {
+    background-color: var(--bg2)
+}
+
+div.side-bar *:focus-visible {
+    background-color: #2b4253;
+    outline: none;
+}
+
+div.new-task-list {
+    display: flex;
+    align-items: center;
+}
+
+div.new-task-list > button {
+    font-weight: 1000;
+    font-size: x-large;
 }
 
 div.task-list, div.detailed-task {
