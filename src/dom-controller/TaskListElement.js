@@ -20,14 +20,14 @@ class TaskListElement {
         removeButton.addEventListener('click', ()=> this.onDelete());
         this.list = make('ol');
         this.tasks = [];
-        const newTaskButton = new NewThingButton('New Task...', 'new-task',
+        this.newTaskButton = new NewThingButton('New Task...', 'new-task',
             (thing) => this.onNewTask(thing));
         this.newTaskInput = make('input', {placeholder: 'New task...'});
         this.root = make('div', {class: 'task-list'}, [
             this.header.root,
             removeButton,
-            this.list,
-            newTaskButton.root
+            this.newTaskButton.root,
+            this.list
         ]);
         this.selectedTaskList = null;
         this.notifyNameChange = notifyNameChange;
@@ -48,6 +48,7 @@ class TaskListElement {
         this.header.root.value = taskList.title;
         this.list.replaceChildren();
         this.tasks  = []
+        this.newTaskButton.input.value = '';
         for (let task of taskList.tasks) {
             this.addTask(task);
         }
