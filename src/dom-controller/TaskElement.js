@@ -25,7 +25,7 @@ class TaskElement {
 
     onTitleChange(title) {
         this.task.title = title;
-        this.notifyTitleChange(this.task);
+        this.notifyTitleChange();
     }
 
     onCheckboxChange(checked) {

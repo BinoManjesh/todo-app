@@ -25,16 +25,21 @@ console.log(todoData);
 
 const taskListElement = new TaskListElement(
     (taskList) => {sideBar.onTaskListNameChange(taskList)},
-    (taskList) => sideBar.onTaskListDelete(taskList),
+    (taskList) => {
+        sideBar.onTaskListDelete(taskList);
+        detailedTaskElement.hide();
+    },
     (task) => detailedTaskElement.onTaskSelected(task),
-    (task) => detailedTaskElement.onTitleChange());
-const sideBar = new SideBar(todoData,
-    (taskList) => taskListElement.onSelectTaskList(taskList));
+    () => detailedTaskElement.onTitleChange());
 const detailedTaskElement = new DetailedTaskElement(
     (task) => taskListElement.onDateChange(task),
     (task) => taskListElement.onPriorityChange(task),
     (task) => taskListElement.onTaskDelete(task));
-detailedTaskElement.onTaskSelected(todoData.taskLists[0].tasks[1]);
+const sideBar = new SideBar(todoData,
+    (taskList) => {
+        taskListElement.onSelectTaskList(taskList);
+        detailedTaskElement.hide();
+    });
 
 document.body.appendChild(sideBar.root);
 document.body.appendChild(taskListElement.root);

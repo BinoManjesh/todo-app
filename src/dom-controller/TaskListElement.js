@@ -43,7 +43,7 @@ class TaskListElement {
     }
 
     onSelectTaskList(taskList) {
-        this.root.hidden = false;
+        this.root.classList.remove('hidden');
         this.selectedTaskList = taskList;
         this.header.root.value = taskList.title;
         this.list.replaceChildren();
@@ -67,7 +67,7 @@ class TaskListElement {
     }
 
     onDelete() {
-        this.root.hidden = true;
+        this.root.classList.add('hidden');
         this.notifyDelete(this.selectedTaskList);
     }
 

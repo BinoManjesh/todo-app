@@ -44,7 +44,7 @@ class DetailedTaskElement {
         this.date.value = task.dueDate;
         this.priority.value = task.priority;
         this.description.value = task.description;
-        this.root.hidden = false;
+        this.root.classList.remove('hidden');
     }
 
     onTitleChange() {
@@ -67,7 +67,11 @@ class DetailedTaskElement {
 
     onDelete() {
         this.notifyDelete(this.selectedTask);
-        this.root.hidden = true;
+        this.hide();
+    }
+    
+    hide() {
+        this.root.classList.add('hidden');
     }
 }
 
