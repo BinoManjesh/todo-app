@@ -47,6 +47,10 @@ class DetailedTaskElement {
         this.root.hidden = false;
     }
 
+    onTitleChange() {
+        this.title.textContent = this.selectedTask.title;
+    }
+
     onDateChange(date) {
         this.selectedTask.dueDate = date;
         this.notifyDateChange(this.selectedTask);

@@ -3,7 +3,7 @@ import { make, makeText } from "../tree-maker";
 
 class TaskElement { 
     
-    constructor(task, notifySelected) {
+    constructor(task, notifySelected, notifyTitleChange) {
         this.task = task;
         const checkbox = make('input', {type: 'checkbox'});
         checkbox.checked = task.isDone;
@@ -20,10 +20,12 @@ class TaskElement {
         ]);
         this.root.addEventListener('click', () => notifySelected(task));
         this.onPriorityChange();
+        this.notifyTitleChange = notifyTitleChange;
     }
 
     onTitleChange(title) {
         this.task.title = title;
+        this.notifyTitleChange(this.task);
     }
 
     onCheckboxChange(checked) {

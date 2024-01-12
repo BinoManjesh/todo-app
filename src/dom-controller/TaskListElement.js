@@ -12,7 +12,8 @@ class Editable {
 
 class TaskListElement {
 
-    constructor(notifyNameChange, notifyDelete, notifyTaskSelect) {
+    constructor(notifyNameChange, notifyDelete, notifyTaskSelect,
+        notifyTitleChange) {
         this.header = new Editable('', 'task-list-name',
             (value) => {this.onNameChange(value)});
         const removeButton = makeText('button', 'Delete Task list');
@@ -32,10 +33,11 @@ class TaskListElement {
         this.notifyNameChange = notifyNameChange;
         this.notifyDelete = notifyDelete;
         this.notifyTaskSelect = notifyTaskSelect;
+        this.notifyTitleChange = notifyTitleChange;
     }
 
     addTask(task) {
-        const taskElement = new TaskElement(task, this.notifyTaskSelect);
+        const taskElement = new TaskElement(task, this.notifyTaskSelect, this.notifyTitleChange);
         this.tasks.push(taskElement);
         this.list.appendChild(taskElement.root);
     }

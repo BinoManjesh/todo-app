@@ -26,7 +26,8 @@ console.log(todoData);
 const taskListElement = new TaskListElement(
     (taskList) => {sideBar.onTaskListNameChange(taskList)},
     (taskList) => sideBar.onTaskListDelete(taskList),
-    (task) => detailedTaskElement.onTaskSelected(task));
+    (task) => detailedTaskElement.onTaskSelected(task),
+    (task) => detailedTaskElement.onTitleChange());
 const sideBar = new SideBar(todoData,
     (taskList) => taskListElement.onSelectTaskList(taskList));
 const detailedTaskElement = new DetailedTaskElement(
