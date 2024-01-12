@@ -4,6 +4,11 @@ class NewThingButton {
     
     constructor(placeholder, className, onNewThing) {
         this.input = make('input', {placeholder: placeholder});
+        this.input.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                button.click();
+            }
+        }); 
         const button = makeText('button', '+');
         this.root = make('div', {class: className}, [
             this.input,

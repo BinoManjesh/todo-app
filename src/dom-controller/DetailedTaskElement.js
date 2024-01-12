@@ -25,8 +25,11 @@ class DetailedTaskElement {
         this.root = make('div', {class: 'detailed-task'}, [
             this.title,
             removeButton,
-            this.date,
-            this.priority,
+            make('div', {}, [
+                this.date,
+                makeText('p', 'Priority: '),
+                this.priority
+            ]),
             this.description
         ]);
         this.selectedTask = null;

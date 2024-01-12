@@ -22,6 +22,10 @@ button {
     padding: 0.25em;
 }
 
+button:hover {
+    filter: brightness(0.75);
+}
+
 input, button, textarea, select {
     border: none;
     border-radius: 5px;
@@ -93,6 +97,8 @@ div.task-list *:focus-visible {
 
 div.task-list > ol > div {
     display: flex;
+    margin: 0.5em 0;
+    gap: 0.5em
 }
 
 div.task-list span {
@@ -121,9 +127,19 @@ div.detailed-task, div.detailed-task * {
 }
 
 div.detailed-task {
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: auto auto 1fr;
     gap: 1em
 }
+
+div.detailed-task > div {
+    display: flex;
+    gap: 1em;
+}
+
+div.detailed-task > div > p {
+    margin-left: auto;
+}
+
 
 div.detailed-task > button {
     color: rgb(123, 0, 0);
@@ -131,5 +147,17 @@ div.detailed-task > button {
 
 div.detailed-task > textarea {
     padding: 1em;
-    box-shadow: var(--bg1) 2px 2px 5px;
+    box-shadow: var(--bg1) 0 0 10px;
+}
+
+.P1 > input:nth-child(2) {
+    outline: green solid;
+}
+
+.P2 > input:nth-child(2) {
+    outline: yellow solid;
+}
+
+.P3 > input:nth-child(2) {
+    outline: red solid;
 }
