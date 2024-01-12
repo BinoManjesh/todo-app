@@ -18,10 +18,13 @@ input::placeholder {
     color: var(--txt2);
 }
 
+button {
+    padding: 0.25em;
+}
+
 input, button, textarea, select {
     border: none;
     border-radius: 5px;
-    padding: 5px;
     font-size: 1em;
 }
 
@@ -53,7 +56,7 @@ div.side-bar * {
     background-color: var(--bg2)
 }
 
-div.side-bar *:focus-visible {
+div.side-bar *:focus-visible, div.detailed-task *:focus-visible {
     background-color: #2b4253;
     outline: none;
 }
@@ -113,6 +116,20 @@ div.detailed-task > button, div.task-list > button {
     place-self: start end;
 }
 
+div.detailed-task, div.detailed-task * {
+    background-color: var(--bg2);
+}
+
+div.detailed-task {
+    grid-template-rows: auto auto auto 1fr;
+    gap: 1em
+}
+
+div.detailed-task > button {
+    color: rgb(123, 0, 0);
+}
+
 div.detailed-task > textarea {
-    height: 500px;
+    padding: 1em;
+    box-shadow: var(--bg1) 2px 2px 5px;
 }
