@@ -5,7 +5,8 @@
   "private": "true",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack serve --open-app chromium"
+    "start": "webpack serve --open-app chromium",
+    "push_dist": "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
   "author": "",
