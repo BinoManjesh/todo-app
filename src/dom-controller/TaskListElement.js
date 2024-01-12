@@ -19,7 +19,7 @@ class TaskListElement {
         removeButton.addEventListener('click', ()=> this.onDelete());
         this.list = make('ol');
         this.tasks = [];
-        const newTaskButton = new NewThingButton('Task title...', 'new-task',
+        const newTaskButton = new NewThingButton('New Task...', 'new-task',
             (thing) => this.onNewTask(thing));
         this.newTaskInput = make('input', {placeholder: 'New task...'});
         this.root = make('div', {class: 'task-list'}, [

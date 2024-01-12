@@ -19,7 +19,7 @@ class DetailedTaskElement {
                 makeText('option', DetailedTaskElement.priorityNames[i],
                 {value: i}));
         }
-        this.description = make('textarea');
+        this.description = make('textarea', {'placeholder': 'Description...'});
         this.description.addEventListener('change',
             () => this.onDescriptionChange(this.description.value));
         this.root = make('div', {class: 'detailed-task'}, [

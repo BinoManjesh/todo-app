@@ -14,7 +14,7 @@
     font-family: Poppins, sans-serif;
 }
 
-input::placeholder {
+*::placeholder {
     color: var(--txt2);
 }
 
