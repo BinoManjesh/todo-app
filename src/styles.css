@@ -1,172 +1,183 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 :root {
-    --bg1: #27374D;
-    --bg2: #526D82;
-    --txt1: #DDE6ED;
-    --txt2: #81a8c8;
-    height: 100%;
+  --bg1: #27374d;
+  --bg2: #526d82;
+  --txt1: #dde6ed;
+  --txt2: #81a8c8;
+  height: 100%;
 }
 
 * {
-    background-color: var(--bg1);
-    color: var(--txt1);
-    font-family: Poppins, sans-serif;
+  background-color: var(--bg1);
+  color: var(--txt1);
+  font-family: Poppins, sans-serif;
 }
 
 *::placeholder {
-    color: var(--txt2);
+  color: var(--txt2);
 }
 
 button {
-    padding: 0.25em;
+  padding: 0.25em;
 }
 
-button:hover, div.task-lists > p:hover, input:hover {
-    filter: brightness(0.75);
+button:hover,
+div.task-lists > p:hover,
+input:hover {
+  filter: brightness(0.75);
 }
 
-input, button, textarea, select {
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
+input,
+button,
+textarea,
+select {
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
 }
 
 textarea {
-    resize: none;
+  resize: none;
 }
 
 ol {
-    padding: 0;
+  padding: 0;
 }
 
 body {
-    display: flex;
-    margin: 0;
-    height: 100%;
+  display: flex;
+  margin: 0;
+  height: 100%;
 }
 
 div.side-bar {
-    flex-grow: 0;
-    background-color: var(--bg2);
-    padding: 1em;
+  flex-grow: 0;
+  background-color: var(--bg2);
+  padding: 1em;
 }
 
 div.side-bar input {
-    max-width: 10em;
+  max-width: 10em;
 }
 
 div.side-bar * {
-    background-color: var(--bg2)
+  background-color: var(--bg2);
 }
 
-div.side-bar *:focus-visible, div.detailed-task *:focus-visible {
-    background-color: #2b4253;
-    outline: none;
+div.side-bar *:focus-visible,
+div.detailed-task *:focus-visible {
+  background-color: #2b4253;
+  outline: none;
 }
 
 div.task-lists > p {
-    margin: 0;
-    padding: 0.5em 0.25em;
+  margin: 0;
+  padding: 0.5em 0.25em;
 }
 
-div.new-task-list, div.new-task {
-    display: flex;
-    align-items: center;
+div.new-task-list,
+div.new-task {
+  display: flex;
+  align-items: center;
 }
 
-div.new-task-list > button, div.new-task > button {
-    font-weight: 1000;
-    font-size: x-large;
+div.new-task-list > button,
+div.new-task > button {
+  font-weight: 1000;
+  font-size: x-large;
 }
 
-div.task-list, div.detailed-task {
-    flex-grow: 1;
-    display: grid;
-    grid-template-columns: auto auto;
-    padding: 1em;
+div.task-list,
+div.detailed-task {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 1em;
 }
 
-div.task-list > :nth-child(n + 3), div.detailed-task > :nth-child(n + 3) {
-    grid-column-start: span 2;
+div.task-list > :nth-child(n + 3),
+div.detailed-task > :nth-child(n + 3) {
+  grid-column-start: span 2;
 }
 
 div.task-list {
-    align-self: flex-start;
+  align-self: flex-start;
 }
 
 div.task-list *:focus-visible {
-    outline: none;
-    background-color: #3a567c;
+  outline: none;
+  background-color: #3a567c;
 }
 
 div.task-list > ol > div {
-    display: flex;
-    margin: 0.5em 0;
-    gap: 0.5em
+  display: flex;
+  margin: 0.5em 0;
+  gap: 0.5em;
 }
 
 div.task-list span {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 div.new-task {
-    display: flex;
+  display: flex;
 }
 div.new-task input {
-    flex: 1 1 0;
+  flex: 1 1 0;
 }
 
 input.task-list-name {
-    max-width: 15em;
+  max-width: 15em;
 }
 
-div.detailed-task > button, div.task-list > button {
-    color: red;
-    padding: 5px;
-    place-self: start end;
+div.detailed-task > button,
+div.task-list > button {
+  color: red;
+  padding: 5px;
+  place-self: start end;
 }
 
-div.detailed-task, div.detailed-task * {
-    background-color: var(--bg2);
+div.detailed-task,
+div.detailed-task * {
+  background-color: var(--bg2);
 }
 
 div.detailed-task {
-    grid-template-rows: auto auto 1fr;
-    gap: 1em
+  grid-template-rows: auto auto 1fr;
+  gap: 1em;
 }
 
 div.detailed-task > div {
-    display: flex;
-    gap: 1em;
+  display: flex;
+  gap: 1em;
 }
 
 div.detailed-task > div > p {
-    margin-left: auto;
+  margin-left: auto;
 }
 
-
 div.detailed-task > button {
-    color: rgb(123, 0, 0);
+  color: rgb(123, 0, 0);
 }
 
 div.detailed-task > textarea {
-    padding: 1em;
-    box-shadow: var(--bg1) 0 0 10px;
+  padding: 1em;
+  box-shadow: var(--bg1) 0 0 10px;
 }
 
 .P1 > input:nth-child(2) {
-    outline: green solid;
+  outline: green solid;
 }
 
 .P2 > input:nth-child(2) {
-    outline: yellow solid;
+  outline: yellow solid;
 }
 
 .P3 > input:nth-child(2) {
-    outline: red solid;
+  outline: red solid;
 }
 
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }

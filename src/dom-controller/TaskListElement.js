@@ -3,97 +3,107 @@ import NewThingButton from "./NewThingButton";
 import TaskElement from "./TaskElement";
 
 class Editable {
-    
-    constructor(value, className, onChange) {
-        this.root = make('input', {value: value, class: className});
-        this.root.addEventListener('change', () => onChange(this.root.value));
-    }
+  constructor(value, className, onChange) {
+    this.root = make("input", { value: value, class: className });
+    this.root.addEventListener("change", () => onChange(this.root.value));
+  }
 }
 
 class TaskListElement {
+  constructor(
+    notifyNameChange,
+    notifyDelete,
+    notifyTaskSelect,
+    notifyTitleChange,
+  ) {
+    this.header = new Editable("", "task-list-name", (value) => {
+      this.onNameChange(value);
+    });
+    const removeButton = makeText("button", "Delete Task list");
+    removeButton.addEventListener("click", () => this.onDelete());
+    this.list = make("ol");
+    this.tasks = [];
+    this.newTaskButton = new NewThingButton(
+      "New Task...",
+      "new-task",
+      (thing) => this.onNewTask(thing),
+    );
+    this.newTaskInput = make("input", { placeholder: "New task..." });
+    this.root = make("div", { class: "task-list" }, [
+      this.header.root,
+      removeButton,
+      this.newTaskButton.root,
+      this.list,
+    ]);
+    this.selectedTaskList = null;
+    this.notifyNameChange = notifyNameChange;
+    this.notifyDelete = notifyDelete;
+    this.notifyTaskSelect = notifyTaskSelect;
+    this.notifyTitleChange = notifyTitleChange;
+  }
 
-    constructor(notifyNameChange, notifyDelete, notifyTaskSelect,
-        notifyTitleChange) {
-        this.header = new Editable('', 'task-list-name',
-            (value) => {this.onNameChange(value)});
-        const removeButton = makeText('button', 'Delete Task list');
-        removeButton.addEventListener('click', ()=> this.onDelete());
-        this.list = make('ol');
-        this.tasks = [];
-        this.newTaskButton = new NewThingButton('New Task...', 'new-task',
-            (thing) => this.onNewTask(thing));
-        this.newTaskInput = make('input', {placeholder: 'New task...'});
-        this.root = make('div', {class: 'task-list'}, [
-            this.header.root,
-            removeButton,
-            this.newTaskButton.root,
-            this.list
-        ]);
-        this.selectedTaskList = null;
-        this.notifyNameChange = notifyNameChange;
-        this.notifyDelete = notifyDelete;
-        this.notifyTaskSelect = notifyTaskSelect;
-        this.notifyTitleChange = notifyTitleChange;
-    }
+  addTask(task) {
+    const taskElement = new TaskElement(
+      task,
+      this.notifyTaskSelect,
+      this.notifyTitleChange,
+    );
+    this.tasks.push(taskElement);
+    this.list.appendChild(taskElement.root);
+  }
 
-    addTask(task) {
-        const taskElement = new TaskElement(task, this.notifyTaskSelect, this.notifyTitleChange);
-        this.tasks.push(taskElement);
-        this.list.appendChild(taskElement.root);
+  onSelectTaskList(taskList) {
+    this.root.classList.remove("hidden");
+    this.selectedTaskList = taskList;
+    this.header.root.value = taskList.title;
+    this.list.replaceChildren();
+    this.tasks = [];
+    this.newTaskButton.input.value = "";
+    for (let task of taskList.tasks) {
+      this.addTask(task);
     }
+  }
 
-    onSelectTaskList(taskList) {
-        this.root.classList.remove('hidden');
-        this.selectedTaskList = taskList;
-        this.header.root.value = taskList.title;
-        this.list.replaceChildren();
-        this.tasks  = []
-        this.newTaskButton.input.value = '';
-        for (let task of taskList.tasks) {
-            this.addTask(task);
-        }
+  onNewTask(title) {
+    if (this.selectedTaskList === null) {
+      return;
     }
-    
-    onNewTask(title) {
-        if (this.selectedTaskList === null) {
-            return;
-        }
-        this.selectedTaskList.addTask(title);
-        this.addTask(this.selectedTaskList.tasks.at(-1));
-    }
+    this.selectedTaskList.addTask(title);
+    this.addTask(this.selectedTaskList.tasks.at(-1));
+  }
 
-    onNameChange(name) {
-        this.selectedTaskList.title = name;
-        this.notifyNameChange(this.selectedTaskList);
-    }
+  onNameChange(name) {
+    this.selectedTaskList.title = name;
+    this.notifyNameChange(this.selectedTaskList);
+  }
 
-    onDelete() {
-        this.root.classList.add('hidden');
-        this.notifyDelete(this.selectedTaskList);
-    }
+  onDelete() {
+    this.root.classList.add("hidden");
+    this.notifyDelete(this.selectedTaskList);
+  }
 
-    getTaskElement(task) {
-        const index = this.selectedTaskList.tasks.indexOf(task);
-        return this.tasks[index];
-    }
+  getTaskElement(task) {
+    const index = this.selectedTaskList.tasks.indexOf(task);
+    return this.tasks[index];
+  }
 
-    onDateChange(task) {
-        const taskElement = this.getTaskElement(task);
-        taskElement.onDateChange();
-    }
+  onDateChange(task) {
+    const taskElement = this.getTaskElement(task);
+    taskElement.onDateChange();
+  }
 
-    onPriorityChange(task) {
-        const taskElement = this.getTaskElement(task);
-        taskElement.onPriorityChange();
-    }
-    
-    onTaskDelete(task) {
-        const index = this.selectedTaskList.tasks.indexOf(task)
-        const taskElement = this.tasks[index];
-        taskElement.onDelete();
-        this.tasks.splice(index, 1);
-        this.selectedTaskList.removeTask(task);
-    }
+  onPriorityChange(task) {
+    const taskElement = this.getTaskElement(task);
+    taskElement.onPriorityChange();
+  }
+
+  onTaskDelete(task) {
+    const index = this.selectedTaskList.tasks.indexOf(task);
+    const taskElement = this.tasks[index];
+    taskElement.onDelete();
+    this.tasks.splice(index, 1);
+    this.selectedTaskList.removeTask(task);
+  }
 }
 
 export default TaskListElement;
