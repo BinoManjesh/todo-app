@@ -16,7 +16,9 @@ class SideBar {
             this.addTaskList(taskList)
         }
         this.notifySelectTaskList = notifySelectTaskList;
-        this.notifySelectTaskList(todoData.taskLists[0]);
+        if (todoData.taskLists[0]) {
+            this.notifySelectTaskList(todoData.taskLists[0]);
+        }
     }
 
     onNewTaskList(title) {

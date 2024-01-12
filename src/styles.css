@@ -22,7 +22,7 @@ button {
     padding: 0.25em;
 }
 
-button:hover {
+button:hover, div.task-lists > p:hover, input:hover {
     filter: brightness(0.75);
 }
 
@@ -63,6 +63,11 @@ div.side-bar * {
 div.side-bar *:focus-visible, div.detailed-task *:focus-visible {
     background-color: #2b4253;
     outline: none;
+}
+
+div.task-lists > p {
+    margin: 0;
+    padding: 0.5em 0.25em;
 }
 
 div.new-task-list, div.new-task {

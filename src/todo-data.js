@@ -1,5 +1,14 @@
 class Task {
 
+    static fromObject(object) {
+        const task = new Task(object.title);
+        task.description = object.description;
+        task.isDone = object.isDone;
+        task.dueDate = object.dueDate;
+        task.priority = object.priority;
+        return task;
+    }
+
     constructor(title) {
         this.title = title;
         this.description = '';
@@ -10,6 +19,14 @@ class Task {
 }
 
 class TaskList {
+
+    static fromObject(object) {
+        const taskList = new TaskList(object.title);
+        for (const subObject of object.tasks) {
+            taskList.tasks.push(Task.fromObject(subObject));
+        }
+        return taskList;
+    }
 
     constructor(title) {
         this.title = title;
@@ -26,6 +43,14 @@ class TaskList {
 }
 
 class TodoData {
+
+    static fromObject(object) {
+        const todoData = new TodoData();
+        for (const subObject of object.taskLists) {
+            todoData.taskLists.push(TaskList.fromObject(subObject));
+        }
+        return todoData;
+    }
     
     constructor() {
         this.taskLists = new Array();

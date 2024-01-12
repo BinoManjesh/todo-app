@@ -1,27 +1,19 @@
 import DetailedTaskElement from "./dom-controller/DetailedTaskElement";
 import SideBar from "./dom-controller/SideBar";
 import TaskListElement from "./dom-controller/TaskListElement";
-import { TodoData } from "./todo-data";
 import './styles.css'
+import { restoreData, saveData } from "./local-storage-loader";
 
-const todoData = new TodoData();
-todoData.addTaskList('inbox');
-todoData.taskLists[0].addTask('bruh moment');
-todoData.taskLists[0].tasks[0].isDone = true;
-todoData.taskLists[0].addTask('bruh moment2');
-todoData.taskLists[0].tasks[1].dueDate = '2024-01-09';
-todoData.taskLists[0].tasks[1].description = 'yayayayayyayaya hohohoo hohooh yayayaayyayyay hohohoh';
-todoData.taskLists[0].addTask('become awesome');
-todoData.taskLists[0].tasks[2].isDone = true;
-todoData.taskLists[0].tasks[2].dueDate = '2026-12-05';
-todoData.addTaskList('work');
-todoData.taskLists[1].addTask('work moment');
-todoData.taskLists[1].addTask('work moment2');
-todoData.taskLists[1].addTask('work moment3');
-todoData.addTaskList('personal');
-todoData.taskLists[2].addTask('wow');
+let todoData = restoreData();
 
-console.log(todoData);
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState == 'hidden') {
+        saveData(todoData);
+    }
+    if (document.visibilityState == 'visible') {
+        todoData = restoreData();
+    }
+});
 
 const taskListElement = new TaskListElement(
     (taskList) => {sideBar.onTaskListNameChange(taskList)},
