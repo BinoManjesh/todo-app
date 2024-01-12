@@ -22,14 +22,15 @@ input, button, textarea, select {
     border: none;
     border-radius: 5px;
     padding: 5px;
-}
-
-input {
-    max-width: 100px;
+    font-size: 1em;
 }
 
 textarea {
     resize: none;
+}
+
+ol {
+    padding: 0;
 }
 
 body {
@@ -44,6 +45,10 @@ div.side-bar {
     padding: 1em;
 }
 
+div.side-bar input {
+    max-width: 10em;
+}
+
 div.side-bar * {
     background-color: var(--bg2)
 }
@@ -53,12 +58,12 @@ div.side-bar *:focus-visible {
     outline: none;
 }
 
-div.new-task-list {
+div.new-task-list, div.new-task {
     display: flex;
     align-items: center;
 }
 
-div.new-task-list > button {
+div.new-task-list > button, div.new-task > button {
     font-weight: 1000;
     font-size: x-large;
 }
@@ -67,17 +72,42 @@ div.task-list, div.detailed-task {
     flex-grow: 1;
     display: grid;
     grid-template-columns: auto auto;
+    padding: 1em;
 }
 
 div.task-list > :nth-child(n + 3), div.detailed-task > :nth-child(n + 3) {
     grid-column-start: span 2;
 }
 
-div.task-list > button {
-    place-self: start end;
+div.task-list {
+    align-self: flex-start;
 }
 
-div.detailed-task > button {
+div.task-list *:focus-visible {
+    outline: none;
+    background-color: #3a567c;
+}
+
+div.task-list > ol > div {
+    display: flex;
+}
+
+div.task-list span {
+    margin-left: auto;
+}
+
+div.new-task {
+    display: flex;
+}
+div.new-task input {
+    flex: 1 1 0;
+}
+
+input.task-list-name {
+    max-width: 15em;
+}
+
+div.detailed-task > button, div.task-list > button {
     color: red;
     padding: 5px;
     place-self: start end;
